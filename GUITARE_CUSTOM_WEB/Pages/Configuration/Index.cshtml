@@ -1,0 +1,75 @@
+﻿@page
+@model GUITARE_CUSTOM_WEB.Pages.Configuration.IndexModel
+@{
+    ViewData["Title"] = "Configurations";
+}
+
+<div class="container">
+    <h1>Mes configurations</h1>
+    <hr />
+
+    @if (!string.IsNullOrEmpty(Model.Erreur))
+    {
+        <p class="text-danger">@Model.Erreur</p>
+    }
+
+    @if (Model.Configurations == null || !Model.Configurations.Any())
+    {
+        <div class="text-center">
+            <p>Aucune configuration pour le moment.</p>
+
+            <a class="btn btn-success" asp-page="/Configuration/Create">
+                Créer une guitare
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var configComplete in Model.Configurations)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>@configComplete.Config.NomConfiguration</h5>
+
+                            <p>
+                                Créée le :
+                                @configComplete.Config.DateCreation.ToString("dd/MM/yyyy")
+                            </p>
+
+                            <a class="btn btn-primary"
+                               asp-page="/Configuration/Edit"
+                               asp-route-id="@configComplete.Config.IdConfiguration">
+                                Modifier
+                            </a>
+
+                            <a class="btn btn-success"
+                               asp-page="/Commande/Create"
+                               asp-route-id="@configComplete.Config.IdConfiguration">
+                                Commander
+                            </a>
+
+                            <form method="post"
+                                  asp-page-handler="Delete"
+                                  asp-route-id="@configComplete.Config.IdConfiguration"
+                                  style="display:inline;">
+                                <button type="submit"
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Supprimer cette configuration ?');">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-3">
+            <a class="btn btn-success" asp-page="/Configuration/Create">
+                Nouvelle guitare
+            </a>
+        </div>
+    }
+</div>

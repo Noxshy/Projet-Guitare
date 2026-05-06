@@ -1,0 +1,33 @@
+﻿@page
+@model GUITARE_CUSTOM_WEB.Pages.Auth.LoginModel
+@{
+    ViewData["Title"] = "Se connecter";
+}
+
+<h2>Connexion</h2>
+
+<form method="post">
+
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" type="email" placeholder="Email" required />
+    </div>
+
+    <div>
+        <label>Mot de passe</label>
+        <input asp-for="Password" type="password" placeholder="Mot de passe" required />
+    </div>
+
+    <button type="submit">Se connecter</button>
+
+</form>
+
+@if (Model.Erreur != null)
+{
+    <p style="color:red">@Model.Erreur</p>
+}
+
+<p>
+    Pas de compte ?
+    <a href="/Auth/Register">Créer un compte</a>
+</p>

@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/BACK/" />
+  <Folder Name="/BACK/API/">
+    <Project Path="API_GUITARE_CUSTOM/API_GUITARE_CUSTOM.csproj" Id="63d97fa2-12ea-402c-b980-9f5ad940e445" />
+  </Folder>
+  <Folder Name="/BACK/BDD_GUITARE_CUSTOM/" />
+  <Folder Name="/BACK/BDD_GUITARE_CUSTOM/DAL/">
+    <Project Path="LIB_GUITARE_CUSTOM/LIB_GUITARE_CUSTOM.csproj" Id="6c9f17f5-1416-4464-a30b-f70ebe5ba305" />
+    <Project Path="LIB_LOGIN/LIB_LOGIN.csproj" Id="6bc6f956-127b-479f-934e-0446af57fb5a" />
+  </Folder>
+  <Folder Name="/BACK/BDD_GUITARE_CUSTOM/SQL/">
+    <Project Path="SQL_GUITARE_CUSTOM/SQL_GUITARE_CUSTOM.sqlproj" Id="df06c551-4c56-4a17-a930-0db070c80354">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/FRONT/">
+    <Project Path="GUITARE_ATELIER_WPF/GUITARE_ATELIER_WPF.csproj" Id="66b48379-7af6-4976-9a69-1730befdda9f" />
+    <Project Path="GUITARE_CUSTOM_WEB/GUITARE_CUSTOM_WEB.csproj" Id="94e7b7f1-7226-4a2d-8113-5d3f215c4aea" />
+  </Folder>
+</Solution>

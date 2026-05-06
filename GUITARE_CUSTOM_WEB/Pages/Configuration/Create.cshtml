@@ -1,0 +1,144 @@
+﻿@page
+@using System.Text.RegularExpressions
+@model GUITARE_CUSTOM_WEB.Pages.Configuration.CreateModel
+@{
+    ViewData["Title"] = "Créer une configuration";
+}
+
+<div class="container">
+    <h1>Créer une guitare</h1>
+    <hr />
+
+    @if (!string.IsNullOrEmpty(Model.Erreur))
+    {
+        <div class="alert alert-danger">
+            <pre style="margin:0; white-space:pre-wrap;">@Model.Erreur</pre>
+        </div>
+    }
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Nom de la configuration</label>
+            <input asp-for="NomConfiguration" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Vibrato</label>
+            <select asp-for="IdVibrato" class="form-select">
+                <option value="">-- Choisir un vibrato --</option>
+                @foreach (var vibrato in Model.Vibratos)
+                {
+                    <option value="@vibrato.IdVibrato">
+                        @vibrato.Marque - @vibrato.NomModel
+                    </option>
+                }
+            </select>
+        </div>
+
+        <h4>Micros</h4>
+
+        <div class="mb-3">
+            <label class="form-label">Micro 1</label>
+            <select name="IdMicros" class="form-select">
+                <option value="0">-- Aucun --</option>
+                @foreach (var micro in Model.MicrosDisponibles)
+                {
+                    <option value="@micro.IdMicro">@micro.Marque - @micro.NomModel</option>
+                }
+            </select>
+
+            <label class="form-label mt-2">Position</label>
+            <input name="PositionsMicros" type="number" class="form-control" value="1" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Micro 2</label>
+            <select name="IdMicros" class="form-select">
+                <option value="0">-- Aucun --</option>
+                @foreach (var micro in Model.MicrosDisponibles)
+                {
+                    <option value="@micro.IdMicro">@micro.Marque - @micro.NomModel</option>
+                }
+            </select>
+
+            <label class="form-label mt-2">Position</label>
+            <input name="PositionsMicros" type="number" class="form-control" value="2" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Micro 3</label>
+            <select name="IdMicros" class="form-select">
+                <option value="0">-- Aucun --</option>
+                @foreach (var micro in Model.MicrosDisponibles)
+                {
+                    <option value="@micro.IdMicro">@micro.Marque - @micro.NomModel</option>
+                }
+            </select>
+
+            <label class="form-label mt-2">Position</label>
+            <input name="PositionsMicros" type="number" class="form-control" value="3" />
+        </div>
+
+        <h4>Bois</h4>
+
+        @foreach (var role in Model.RolesBois)
+        {
+            <div class="mb-3">
+                <label class="form-label">@role.NomRole</label>
+
+                <input type="hidden" name="IdRolesBois" value="@role.IdRoleBois" />
+
+                <select name="IdBois" class="form-select bois-select" onchange="majCouleurBois(this)">
+                    <option value="" data-couleur="">-- Choisir un bois --</option>
+                    @foreach (var bois in Model.BoisDisponibles)
+                    {
+                        var code = bois.CodeCouleur;
+                        var couleurValide = !string.IsNullOrWhiteSpace(code)
+                        && Regex.IsMatch(code, "^#([0-9A-Fa-f]{6})$");
+
+                        <option value="@bois.IdBois" data-couleur="@(couleurValide ? code : "")">
+                            @bois.NomBois (@bois.TypeBois, @bois.NomCouleur)
+                        </option>
+                    }
+                </select>
+
+                <div class="mt-2 d-flex align-items-center gap-2">
+                    <span class="preview-couleur border rounded"
+                          style="display:inline-block; width:22px; height:22px; background-color:transparent;">
+                    </span>
+                    <span class="texte-couleur text-muted">Couleur indispo</span>
+                </div>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success">Créer la configuration</button>
+        <a asp-page="/Configuration/Index" class="btn btn-secondary">Retour</a>
+    </form>
+</div>
+
+<script>
+    function majCouleurBois(select) {
+        const selectedOption = select.options[select.selectedIndex];
+        const codeCouleur = selectedOption.getAttribute("data-couleur");
+
+        const container = select.closest(".mb-3");
+        const preview = container.querySelector(".preview-couleur");
+        const texte = container.querySelector(".texte-couleur");
+
+        const regexHex = /^#([0-9A-Fa-f]{6})$/;
+
+        if (codeCouleur && regexHex.test(codeCouleur)) {
+            preview.style.backgroundColor = codeCouleur;
+            texte.textContent = codeCouleur;
+        } else {
+            preview.style.backgroundColor = "transparent";
+            texte.textContent = "Couleur indispo";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".bois-select").forEach(function (select) {
+            majCouleurBois(select);
+        });
+    });
+</script>

@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Bienvenue sur GUITARE CUSTOM</h1>
+
+    <p>Créez votre guitare personnalisée.</p>
+
+    <hr />
+
+    @if (Model.Role == null)
+    {
+        <p>Vous devez vous connecter pour accéder aux configurations.</p>
+
+        <a class="btn btn-primary" asp-page="/Auth/Login">
+            Se connecter
+        </a>
+    }
+
+    @if (Model.Role == 2)
+    {
+        <p>Bienvenue !</p>
+
+        <a class="btn btn-success" asp-page="/Configuration/Index">
+            Voir les configurations
+        </a>
+    }
+
+</div>
